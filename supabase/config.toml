@@ -1,1 +1,4 @@
 project_id = "tauyzizwfuwbvefbccya"
+
+[functions.medical-chat]
+verify_jwt = true
