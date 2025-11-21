@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Zap, Shield, TrendingUp } from "lucide-react";
 import heroImage from "@/assets/hero-brain-scan.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <section id="accueil" className="pt-24 pb-16 bg-gradient-to-br from-background via-primary-light/20 to-accent-light/10">
       <div className="container mx-auto px-6">
@@ -46,7 +49,12 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="medical" size="lg" className="shadow-hero">
+              <Button 
+                variant="medical" 
+                size="lg" 
+                className="shadow-hero"
+                onClick={() => navigate('/detection-demo')}
+              >
                 <Brain className="h-5 w-5" />
                 Essayer la Démo
               </Button>
