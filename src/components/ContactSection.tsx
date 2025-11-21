@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Mail, Phone, MapPin, Calendar, Brain } from "lucide-react";
+import { Mail, Calendar, Brain } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -90,26 +90,6 @@ const ContactSection = () => {
                   <div>
                     <p className="font-medium text-foreground">Email</p>
                     <p className="text-muted-foreground">contact@diagmind.ai</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-primary-light rounded-lg flex items-center justify-center">
-                    <Phone className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Téléphone</p>
-                    <p className="text-muted-foreground">+33 1 XX XX XX XX</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-primary-light rounded-lg flex items-center justify-center">
-                    <MapPin className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">Adresse</p>
-                    <p className="text-muted-foreground">Paris, France</p>
                   </div>
                 </div>
               </CardContent>
