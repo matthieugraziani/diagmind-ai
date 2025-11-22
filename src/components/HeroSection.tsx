@@ -58,7 +58,13 @@ const HeroSection = () => {
                 <Brain className="h-5 w-5" />
                 Essayer la Démo
               </Button>
-              <Button variant="medical-outline" size="lg">
+              <Button 
+                variant="medical-outline" 
+                size="lg"
+                onClick={() => {
+                  document.getElementById('technologie')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Découvrir la Technologie
               </Button>
             </div>
