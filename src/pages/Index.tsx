@@ -5,19 +5,23 @@ import AdvantagesSection from "@/components/AdvantagesSection";
 import TechnologySection from "@/components/TechnologySection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import Watermark from "@/components/Watermark";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        <HeroSection />
-        <HowItWorksSection />
-        <AdvantagesSection />
-        <TechnologySection />
-        <ContactSection />
-      </main>
-      <Footer />
+    <div className="min-h-screen relative">
+      <Watermark />
+      <div className="relative z-10">
+        <Header />
+        <main>
+          <HeroSection />
+          <HowItWorksSection />
+          <AdvantagesSection />
+          <TechnologySection />
+          <ContactSection />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };
