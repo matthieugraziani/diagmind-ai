@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Calendar, Brain } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ContactSection = () => {
+  const navigate = useNavigate();
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-background via-primary-light/10 to-accent-light/5">
       <div className="container mx-auto px-6">
@@ -103,7 +105,12 @@ const ContactSection = () => {
                 <p className="text-primary-foreground/90">
                   Testez DiagMind.AI dès maintenant avec notre démo interactive
                 </p>
-                <Button variant="secondary" size="lg" className="bg-background text-primary hover:bg-background/90">
+                <Button 
+                  variant="secondary" 
+                  size="lg" 
+                  className="bg-background text-primary hover:bg-background/90"
+                  onClick={() => navigate('/detection-demo')}
+                >
                   Lancer la Démo
                 </Button>
               </CardContent>
