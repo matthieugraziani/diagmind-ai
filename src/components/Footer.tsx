@@ -1,4 +1,4 @@
-import { Brain, Mail, Phone, MapPin } from "lucide-react";
+import { Brain, Mail, Linkedin, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -52,12 +52,12 @@ const Footer = () => {
                 <span>contact@diagmind.ai</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span>+33 1 XX XX XX XX</span>
+                <Linkedin className="h-4 w-4" />
+                <a href="#" className="hover:text-background transition-colors">LinkedIn Fondateur</a>
               </div>
               <div className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4" />
-                <span>Paris, France</span>
+                <Twitter className="h-4 w-4" />
+                <a href="#" className="hover:text-background transition-colors">@DiagMindAI</a>
               </div>
             </div>
           </div>
