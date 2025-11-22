@@ -63,7 +63,11 @@ const TechnologySection = () => {
           {technologies.map((tech, index) => {
             const Icon = tech.icon;
             return (
-              <Card key={index} className="bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300">
+              <Card 
+                key={index} 
+                className="bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in"
+                style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'forwards' }}
+              >
                 <CardHeader className="pb-4">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-primary-light to-accent-light rounded-xl flex items-center justify-center">
