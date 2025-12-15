@@ -24,19 +24,22 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#accueil" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#accueil" className="text-foreground hover:text-primary transition-colors">
               Accueil
             </a>
-            <a href="#fonctionnement" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#fonctionnement" className="text-foreground hover:text-primary transition-colors">
               Fonctionnement
             </a>
-            <a href="#avantages" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#avantages" className="text-foreground hover:text-primary transition-colors">
               Avantages
             </a>
-            <a href="#technologie" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#technologie" className="text-foreground hover:text-primary transition-colors">
               Technologie
             </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+            <a href="/about" className="text-foreground hover:text-primary transition-colors">
+              À Propos
+            </a>
+            <a href="/#contact" className="text-foreground hover:text-primary transition-colors">
               Contact
             </a>
           </nav>
@@ -64,19 +67,22 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-border">
             <nav className="flex flex-col space-y-4 pt-4">
-              <a href="#accueil" className="text-foreground hover:text-primary transition-colors">
+              <a href="/#accueil" className="text-foreground hover:text-primary transition-colors">
                 Accueil
               </a>
-              <a href="#fonctionnement" className="text-foreground hover:text-primary transition-colors">
+              <a href="/#fonctionnement" className="text-foreground hover:text-primary transition-colors">
                 Fonctionnement
               </a>
-              <a href="#avantages" className="text-foreground hover:text-primary transition-colors">
+              <a href="/#avantages" className="text-foreground hover:text-primary transition-colors">
                 Avantages
               </a>
-              <a href="#technologie" className="text-foreground hover:text-primary transition-colors">
+              <a href="/#technologie" className="text-foreground hover:text-primary transition-colors">
                 Technologie
               </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+              <a href="/about" className="text-foreground hover:text-primary transition-colors">
+                À Propos
+              </a>
+              <a href="/#contact" className="text-foreground hover:text-primary transition-colors">
                 Contact
               </a>
               <div className="flex flex-col space-y-2 pt-4">
