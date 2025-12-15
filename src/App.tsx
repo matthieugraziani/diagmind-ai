@@ -8,6 +8,8 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import DetectionDemo from "./pages/DetectionDemo";
 import About from "./pages/About";
+import LegalNotice from "./pages/LegalNotice";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/about/team" element={<About />} />
           <Route path="/about/research" element={<About />} />
           <Route path="/about/partners" element={<About />} />
+          <Route path="/mentions-legales" element={<LegalNotice />} />
+          <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
