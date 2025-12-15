@@ -138,10 +138,10 @@ const TechnologySection = () => {
 
           <div className="grid md:grid-cols-3 gap-6">
             {/* RGPD Card */}
-            <Card className="bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
+            <Card className="group bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
               <CardHeader className="pb-3">
                 <div className="flex items-center space-x-4">
-                  <RGPDBadge className="w-14 h-14 flex-shrink-0" />
+                  <RGPDBadge className="w-14 h-14 flex-shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]" />
                   <div>
                     <CardTitle className="text-lg font-semibold text-foreground">RGPD</CardTitle>
                     <Badge variant="secondary" className="text-xs mt-1">Règlement Européen</Badge>
@@ -174,10 +174,10 @@ const TechnologySection = () => {
             </Card>
 
             {/* ISO 27001 Card */}
-            <Card className="bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: '750ms', animationFillMode: 'forwards' }}>
+            <Card className="group bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: '750ms', animationFillMode: 'forwards' }}>
               <CardHeader className="pb-3">
                 <div className="flex items-center space-x-4">
-                  <ISO27001Badge className="w-14 h-14 flex-shrink-0" />
+                  <ISO27001Badge className="w-14 h-14 flex-shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]" />
                   <div>
                     <CardTitle className="text-lg font-semibold text-foreground">ISO 27001</CardTitle>
                     <Badge variant="secondary" className="text-xs mt-1">Norme Internationale</Badge>
@@ -210,10 +210,10 @@ const TechnologySection = () => {
             </Card>
 
             {/* CE Marking Card */}
-            <Card className="bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: '900ms', animationFillMode: 'forwards' }}>
+            <Card className="group bg-background/80 backdrop-blur-sm border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: '900ms', animationFillMode: 'forwards' }}>
               <CardHeader className="pb-3">
                 <div className="flex items-center space-x-4">
-                  <CEBadgeSimple className="w-14 h-14 flex-shrink-0" />
+                  <CEBadgeSimple className="w-14 h-14 flex-shrink-0 transition-transform duration-500 group-hover:rotate-[360deg]" />
                   <div>
                     <CardTitle className="text-lg font-semibold text-foreground">Marquage CE</CardTitle>
                     <Badge variant="secondary" className="text-xs mt-1">Dispositif Médical</Badge>
