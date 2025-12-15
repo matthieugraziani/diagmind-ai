@@ -3,7 +3,12 @@ import Footer from "@/components/Footer";
 import Watermark from "@/components/Watermark";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Target, Lightbulb, Award, GraduationCap, Building2, Handshake } from "lucide-react";
+import { Users, Target, Lightbulb, Award, Building2, Handshake } from "lucide-react";
+
+import teamSophie from "@/assets/team-sophie-martin.jpg";
+import teamAlexandre from "@/assets/team-alexandre-dubois.jpg";
+import teamMarie from "@/assets/team-marie-chen.jpg";
+import teamThomas from "@/assets/team-thomas-leroy.jpg";
 
 const About = () => {
   const team = [
@@ -11,25 +16,29 @@ const About = () => {
       name: "Dr. Sophie Martin",
       role: "CEO & Co-fondatrice",
       description: "Neurologue et chercheuse en IA médicale, 15 ans d'expérience en imagerie cérébrale.",
-      expertise: ["Neurologie", "IA Médicale", "Recherche Clinique"]
+      expertise: ["Neurologie", "IA Médicale", "Recherche Clinique"],
+      photo: teamSophie
     },
     {
       name: "Alexandre Dubois",
       role: "CTO & Co-fondateur",
       description: "Expert en deep learning et vision par ordinateur, ancien chercheur au CNRS.",
-      expertise: ["Deep Learning", "Computer Vision", "MLOps"]
+      expertise: ["Deep Learning", "Computer Vision", "MLOps"],
+      photo: teamAlexandre
     },
     {
       name: "Dr. Marie Chen",
       role: "Directrice Scientifique",
       description: "Spécialiste en radiologie interventionnelle et validation clinique des algorithmes IA.",
-      expertise: ["Radiologie", "Validation Clinique", "Protocoles"]
+      expertise: ["Radiologie", "Validation Clinique", "Protocoles"],
+      photo: teamMarie
     },
     {
       name: "Thomas Leroy",
       role: "Directeur Produit",
       description: "10 ans d'expérience dans le développement de solutions healthtech.",
-      expertise: ["Product Management", "UX/UI", "HealthTech"]
+      expertise: ["Product Management", "UX/UI", "HealthTech"],
+      photo: teamThomas
     }
   ];
 
@@ -134,9 +143,11 @@ const About = () => {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <CardHeader className="text-center pb-2">
-                      <div className="w-20 h-20 bg-gradient-hero rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <GraduationCap className="h-10 w-10 text-primary-foreground" />
-                      </div>
+                      <img 
+                        src={member.photo} 
+                        alt={member.name}
+                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary/20 shadow-medical"
+                      />
                       <CardTitle className="text-lg">{member.name}</CardTitle>
                       <p className="text-sm text-primary font-medium">{member.role}</p>
                     </CardHeader>
