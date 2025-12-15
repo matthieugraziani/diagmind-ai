@@ -1,12 +1,12 @@
 const Watermark = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* Layer 1 - Hexagons with slow drift */}
       <svg
-        className="w-full h-full opacity-[0.03]"
+        className="absolute inset-0 w-full h-full opacity-[0.03] animate-[drift_60s_ease-in-out_infinite]"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Hexagonal pattern */}
           <pattern
             id="hexPattern"
             x="0"
@@ -22,8 +22,16 @@ const Watermark = () => {
               strokeWidth="1"
             />
           </pattern>
+        </defs>
+        <rect width="200%" height="200%" x="-50%" y="-50%" fill="url(#hexPattern)" />
+      </svg>
 
-          {/* Neural network dots pattern */}
+      {/* Layer 2 - Neural dots with subtle pulse */}
+      <svg
+        className="absolute inset-0 w-full h-full opacity-[0.025] animate-[pulse-watermark_8s_ease-in-out_infinite]"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
           <pattern
             id="dotsPattern"
             x="0"
@@ -39,7 +47,6 @@ const Watermark = () => {
             <circle cx="112" cy="107" r="2" fill="hsl(var(--primary))" />
             <circle cx="75" cy="150" r="2" fill="hsl(var(--primary))" />
             
-            {/* Connection lines */}
             <line x1="0" y1="0" x2="75" y2="43" stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.5" />
             <line x1="75" y1="43" x2="150" y2="0" stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.5" />
             <line x1="75" y1="43" x2="37" y2="107" stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.5" />
@@ -47,8 +54,16 @@ const Watermark = () => {
             <line x1="37" y1="107" x2="75" y2="150" stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.5" />
             <line x1="112" y1="107" x2="75" y2="150" stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.5" />
           </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dotsPattern)" />
+      </svg>
 
-          {/* DNA helix pattern */}
+      {/* Layer 3 - DNA helix with vertical flow */}
+      <svg
+        className="absolute inset-0 w-full h-full opacity-[0.015] animate-[flow_30s_linear_infinite]"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
           <pattern
             id="dnaPattern"
             x="0"
@@ -69,12 +84,25 @@ const Watermark = () => {
             <circle cx="30" cy="120" r="3" fill="hsl(var(--accent))" opacity="0.6" />
           </pattern>
         </defs>
-
-        {/* Apply patterns across the viewport */}
-        <rect width="100%" height="100%" fill="url(#hexPattern)" />
-        <rect width="100%" height="100%" fill="url(#dotsPattern)" opacity="0.8" />
-        <rect width="100%" height="100%" fill="url(#dnaPattern)" opacity="0.4" />
+        <rect width="100%" height="200%" y="-100%" fill="url(#dnaPattern)" />
       </svg>
+
+      <style>{`
+        @keyframes drift {
+          0%, 100% { transform: translate(0, 0); }
+          25% { transform: translate(10px, 5px); }
+          50% { transform: translate(5px, 10px); }
+          75% { transform: translate(-5px, 5px); }
+        }
+        @keyframes pulse-watermark {
+          0%, 100% { opacity: 0.025; }
+          50% { opacity: 0.04; }
+        }
+        @keyframes flow {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(120px); }
+        }
+      `}</style>
     </div>
   );
 };
