@@ -6,6 +6,7 @@ import TechnologySection from "@/components/TechnologySection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import Watermark from "@/components/Watermark";
+import CookieConsent from "@/components/CookieConsent";
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
         </main>
         <Footer />
       </div>
+      <CookieConsent />
     </div>
   );
 };
