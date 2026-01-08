@@ -71,7 +71,7 @@ const Footer = () => {
           <div className="flex space-x-6 text-sm text-background/70 mt-4 md:mt-0">
             <a href="/mentions-legales" className="hover:text-background transition-colors">Mentions Légales</a>
             <a href="/politique-confidentialite" className="hover:text-background transition-colors">Politique de Confidentialité</a>
-            <a href="/mentions-legales" className="hover:text-background transition-colors">Conditions d'Utilisation</a>
+            <a href="/conditions-utilisation" className="hover:text-background transition-colors">Conditions d'Utilisation</a>
           </div>
         </div>
       </div>

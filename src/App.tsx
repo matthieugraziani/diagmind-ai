@@ -10,6 +10,7 @@ import DetectionDemo from "./pages/DetectionDemo";
 import About from "./pages/About";
 import LegalNotice from "./pages/LegalNotice";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/about/partners" element={<About />} />
           <Route path="/mentions-legales" element={<LegalNotice />} />
           <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
+          <Route path="/conditions-utilisation" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
