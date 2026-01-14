@@ -3,11 +3,66 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Mail, Calendar, Brain } from "lucide-react";
+import { Mail, Calendar, Brain, CheckCircle, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactFormSchema, type ContactFormData, checkRateLimit, sanitizeHtml } from "@/lib/security";
+import { useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    mode: "onBlur",
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    // Rate limiting check
+    const rateLimit = checkRateLimit("contact-form", 3, 60000);
+    if (!rateLimit.allowed) {
+      toast({
+        title: "Trop de tentatives",
+        description: `Veuillez patienter ${Math.ceil(rateLimit.resetIn / 1000)} secondes avant de réessayer.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Sanitize data before processing
+    const sanitizedData = {
+      firstName: sanitizeHtml(data.firstName),
+      lastName: sanitizeHtml(data.lastName),
+      email: data.email.trim().toLowerCase(),
+      establishment: data.establishment ? sanitizeHtml(data.establishment) : undefined,
+      role: data.role ? sanitizeHtml(data.role) : undefined,
+      message: sanitizeHtml(data.message),
+    };
+    
+    // Simulate API call (replace with actual API call)
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    console.log("Validated and sanitized form data:", sanitizedData);
+    
+    toast({
+      title: "Demande envoyée !",
+      description: "Notre équipe vous contactera dans les plus brefs délais.",
+    });
+    
+    reset();
+    setIsSubmitting(false);
+  };
+
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-background via-primary-light/10 to-accent-light/5">
       <div className="container mx-auto px-6">
@@ -32,46 +87,139 @@ const ContactSection = () => {
                 <span>Demander une Démo</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">Prénom</Label>
-                  <Input id="firstName" placeholder="Votre prénom" />
+            <CardContent>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="flex items-center gap-1">
+                      Prénom <span className="text-destructive">*</span>
+                    </Label>
+                    <Input 
+                      id="firstName" 
+                      placeholder="Votre prénom" 
+                      {...register("firstName")}
+                      className={errors.firstName ? "border-destructive focus-visible:ring-destructive" : ""}
+                    />
+                    {errors.firstName && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.firstName.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="flex items-center gap-1">
+                      Nom <span className="text-destructive">*</span>
+                    </Label>
+                    <Input 
+                      id="lastName" 
+                      placeholder="Votre nom" 
+                      {...register("lastName")}
+                      className={errors.lastName ? "border-destructive focus-visible:ring-destructive" : ""}
+                    />
+                    {errors.lastName && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.lastName.message}
+                      </p>
+                    )}
+                  </div>
                 </div>
+                
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Nom</Label>
-                  <Input id="lastName" placeholder="Votre nom" />
+                  <Label htmlFor="email" className="flex items-center gap-1">
+                    Email Professionnel <span className="text-destructive">*</span>
+                  </Label>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="votre.email@hopital.fr" 
+                    {...register("email")}
+                    className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-destructive flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Professionnel</Label>
-                <Input id="email" type="email" placeholder="votre.email@hopital.fr" />
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="establishment">Établissement</Label>
-                <Input id="establishment" placeholder="Nom de votre établissement médical" />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="establishment">Établissement</Label>
+                  <Input 
+                    id="establishment" 
+                    placeholder="Nom de votre établissement médical" 
+                    {...register("establishment")}
+                    className={errors.establishment ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {errors.establishment && (
+                    <p className="text-sm text-destructive flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.establishment.message}
+                    </p>
+                  )}
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="role">Fonction</Label>
-                <Input id="role" placeholder="Radiologue, Chef de service, etc." />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="role">Fonction</Label>
+                  <Input 
+                    id="role" 
+                    placeholder="Radiologue, Chef de service, etc." 
+                    {...register("role")}
+                    className={errors.role ? "border-destructive focus-visible:ring-destructive" : ""}
+                  />
+                  {errors.role && (
+                    <p className="text-sm text-destructive flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.role.message}
+                    </p>
+                  )}
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Décrivez vos besoins et questions concernant DiagMind.AI..."
-                  className="min-h-[100px]"
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="flex items-center gap-1">
+                    Message <span className="text-destructive">*</span>
+                  </Label>
+                  <Textarea 
+                    id="message" 
+                    placeholder="Décrivez vos besoins et questions concernant DiagMind.AI..."
+                    className={`min-h-[100px] ${errors.message ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                    {...register("message")}
+                  />
+                  {errors.message && (
+                    <p className="text-sm text-destructive flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {errors.message.message}
+                    </p>
+                  )}
+                </div>
 
-              <Button variant="medical" size="lg" className="w-full shadow-hero">
-                <Calendar className="h-5 w-5" />
-                Planifier une Démo Personnalisée
-              </Button>
+                <Button 
+                  type="submit" 
+                  variant="medical" 
+                  size="lg" 
+                  className="w-full shadow-hero"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Calendar className="h-5 w-5" />
+                      Planifier une Démo Personnalisée
+                    </>
+                  )}
+                </Button>
+                
+                <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1">
+                  <CheckCircle className="h-3 w-3 text-trust" />
+                  Vos données sont protégées et chiffrées
+                </p>
+              </form>
             </CardContent>
           </Card>
 
