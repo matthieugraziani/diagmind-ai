@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Zap, Shield, TrendingUp } from "lucide-react";
@@ -7,32 +8,84 @@ import heroImage from "@/assets/hero-brain-scan.jpg";
 const HeroSection = () => {
   const navigate = useNavigate();
   
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.95, x: 50 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
   return (
     <section id="accueil" className="pt-24 pb-16 bg-gradient-to-br from-background via-primary-light/20 to-accent-light/10">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-8">
+          <motion.div 
+            className="space-y-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <div className="space-y-4">
-              <Badge variant="secondary" className="px-4 py-2 text-sm font-medium">
-                🧠 Intelligence Artificielle Médicale
-              </Badge>
+              <motion.div variants={itemVariants}>
+                <Badge variant="secondary" className="px-4 py-2 text-sm font-medium">
+                  🧠 Intelligence Artificielle Médicale
+                </Badge>
+              </motion.div>
               
-              <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
+              <motion.h1 
+                variants={itemVariants}
+                className="text-4xl lg:text-6xl font-bold text-foreground leading-tight"
+              >
                 Révolutionnez le{" "}
                 <span className="bg-gradient-hero bg-clip-text text-transparent">
                   diagnostic
                 </span>{" "}
                 des tumeurs cérébrales
-              </h1>
+              </motion.h1>
               
-              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+              <motion.p 
+                variants={itemVariants}
+                className="text-xl text-muted-foreground leading-relaxed max-w-lg"
+              >
                 DiagMind.AI utilise l'intelligence artificielle de pointe pour analyser les images médicales cérébrales avec une précision exceptionnelle, aidant les radiologues à détecter plus rapidement les anomalies.
-              </p>
+              </motion.p>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6">
+            <motion.div 
+              variants={itemVariants}
+              className="grid grid-cols-3 gap-6"
+            >
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">95%</div>
                 <div className="text-sm text-muted-foreground">Précision</div>
@@ -45,10 +98,13 @@ const HeroSection = () => {
                 <div className="text-2xl font-bold text-primary">24/7</div>
                 <div className="text-sm text-muted-foreground">Disponible</div>
               </div>
-            </div>
+            </motion.div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4"
+            >
               <Button 
                 variant="medical" 
                 size="lg" 
@@ -67,10 +123,13 @@ const HeroSection = () => {
               >
                 Découvrir la Technologie
               </Button>
-            </div>
+            </motion.div>
 
             {/* Trust Indicators */}
-            <div className="flex items-center space-x-6 pt-4">
+            <motion.div 
+              variants={itemVariants}
+              className="flex items-center space-x-6 pt-4"
+            >
               <div className="flex items-center space-x-2">
                 <Shield className="h-5 w-5 text-trust" />
                 <span className="text-sm text-muted-foreground">Certifié Médical</span>
@@ -83,11 +142,16 @@ const HeroSection = () => {
                 <TrendingUp className="h-5 w-5 text-primary" />
                 <span className="text-sm text-muted-foreground">Précision Clinique</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Image */}
-          <div className="relative">
+          <motion.div 
+            className="relative"
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <div className="relative overflow-hidden rounded-2xl shadow-hero">
               <img
                 src={heroImage}
@@ -98,20 +162,30 @@ const HeroSection = () => {
             </div>
             
             {/* Floating Stats Cards */}
-            <div className="absolute -top-4 -right-4 bg-background p-4 rounded-xl shadow-medical border border-border animate-pulse-soft">
+            <motion.div 
+              className="absolute -top-4 -right-4 bg-background p-4 rounded-xl shadow-medical border border-border"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
               <div className="text-center">
                 <div className="text-2xl font-bold text-accent">AI</div>
                 <div className="text-xs text-muted-foreground">Analyse Active</div>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="absolute -bottom-4 -left-4 bg-background p-4 rounded-xl shadow-medical border border-border animate-pulse-soft">
+            <motion.div 
+              className="absolute -bottom-4 -left-4 bg-background p-4 rounded-xl shadow-medical border border-border"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, duration: 0.5 }}
+            >
               <div className="text-center">
                 <div className="text-2xl font-bold text-trust">✓</div>
                 <div className="text-xs text-muted-foreground">Détection</div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
