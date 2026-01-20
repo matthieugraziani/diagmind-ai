@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +8,17 @@ import { RGPDBadge, ISO27001Badge, CEBadgeSimple } from "@/components/Certificat
 
 const TechnologySection = () => {
   const ref = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  // Parallax effect for background
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  
+  const bgY = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const bgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1.2, 1.1]);
 
   const technologies = [
     {
@@ -96,14 +106,18 @@ const TechnologySection = () => {
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 opacity-5">
+      {/* Background Image with Parallax */}
+      <motion.div 
+        ref={bgRef}
+        className="absolute inset-0 opacity-5"
+        style={{ y: bgY, scale: bgScale }}
+      >
         <img
           src={aiBackground}
           alt="AI Technology Background"
           className="w-full h-full object-cover"
         />
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
