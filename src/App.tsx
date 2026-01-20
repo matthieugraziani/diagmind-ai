@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CookieConsentProvider } from "@/hooks/useCookieConsent";
+import CookieConsent from "@/components/CookieConsent";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -18,25 +20,28 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/detection-demo" element={<DetectionDemo />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/about/team" element={<About />} />
-          <Route path="/about/research" element={<About />} />
-          <Route path="/about/partners" element={<About />} />
-          <Route path="/mentions-legales" element={<LegalNotice />} />
-          <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
-          <Route path="/conditions-utilisation" element={<TermsOfService />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <CookieConsentProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/detection-demo" element={<DetectionDemo />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/about/team" element={<About />} />
+            <Route path="/about/research" element={<About />} />
+            <Route path="/about/partners" element={<About />} />
+            <Route path="/mentions-legales" element={<LegalNotice />} />
+            <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
+            <Route path="/conditions-utilisation" element={<TermsOfService />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <CookieConsent />
+      </CookieConsentProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
