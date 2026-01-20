@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import DetectionDemo from "./pages/DetectionDemo";
 import About from "./pages/About";
+import FAQ from "./pages/FAQ";
 import LegalNotice from "./pages/LegalNotice";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/about/team" element={<About />} />
             <Route path="/about/research" element={<About />} />
             <Route path="/about/partners" element={<About />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/mentions-legales" element={<LegalNotice />} />
             <Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
             <Route path="/conditions-utilisation" element={<TermsOfService />} />
