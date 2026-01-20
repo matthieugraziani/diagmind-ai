@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Zap, Shield, TrendingUp } from "lucide-react";
@@ -7,6 +8,17 @@ import heroImage from "@/assets/hero-brain-scan.jpg";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  // Parallax effect for the hero image
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 50]);
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -45,7 +57,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="accueil" className="pt-24 pb-16 bg-gradient-to-br from-background via-primary-light/20 to-accent-light/10">
+    <section ref={sectionRef} id="accueil" className="pt-24 pb-16 bg-gradient-to-br from-background via-primary-light/20 to-accent-light/10 overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -54,6 +66,7 @@ const HeroSection = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            style={{ y: contentY }}
           >
             <div className="space-y-4">
               <motion.div variants={itemVariants}>
@@ -145,21 +158,24 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Image */}
+          {/* Right Image with Parallax */}
           <motion.div 
             className="relative"
             variants={imageVariants}
             initial="hidden"
             animate="visible"
           >
-            <div className="relative overflow-hidden rounded-2xl shadow-hero">
+            <motion.div 
+              className="relative overflow-hidden rounded-2xl shadow-hero"
+              style={{ y: imageY, scale: imageScale }}
+            >
               <img
                 src={heroImage}
                 alt="Analyse d'imagerie cérébrale par IA"
-                className="w-full h-[500px] object-cover animate-float"
+                className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
-            </div>
+            </motion.div>
             
             {/* Floating Stats Cards */}
             <motion.div 

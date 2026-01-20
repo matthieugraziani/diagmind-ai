@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,16 @@ import { SOC2Badge, PentestBadge, EncryptionBadge, ZeroTrustBadge, ANSSIBadge, M
 const CybersecuritySection = () => {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  // Parallax effect for decorative elements
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  
+  const decorY1 = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const decorY2 = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const decorScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.2, 0.8]);
 
   const securityFeatures = [
     {
@@ -137,10 +147,16 @@ const CybersecuritySection = () => {
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
-      {/* Decorative background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent rounded-full blur-3xl" />
+      {/* Decorative background with Parallax */}
+      <div className="absolute inset-0 opacity-5 overflow-hidden">
+        <motion.div 
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl"
+          style={{ y: decorY1, scale: decorScale }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent rounded-full blur-3xl"
+          style={{ y: decorY2, scale: decorScale }}
+        />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
