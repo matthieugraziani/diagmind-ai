@@ -43,11 +43,10 @@ const About = () => {
   ];
 
   const milestones = [
-    { year: "2026", event: "Création de DiagMind.AI" },
-    { year: "2027", event: "Première validation clinique sur 10 000 images" },
-    { year: "2028", event: "Obtention du marquage CE Classe IIa" },
-    { year: "2029", event: "Partenariat avec 15 CHU en France" },
-    { year: "2030", event: "Expansion internationale et 1 million d'analyses" }
+    { year: "2026", event: "CHU pilote, Marquage CE et Validation HAS" },
+    { year: "2027", event: "Déploiement dans tous les CHU de France" },
+    { year: "2028", event: "Extension à d'autres pathologies cérébrales" },
+    { year: "2030", event: "Expansion internationale" }
   ];
 
   const partners = [
