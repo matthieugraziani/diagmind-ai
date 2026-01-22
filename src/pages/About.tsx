@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Watermark from "@/components/Watermark";
@@ -10,7 +12,45 @@ import teamAlexandre from "@/assets/team-alexandre-dubois.jpg";
 import teamMarie from "@/assets/team-marie-chen.jpg";
 import teamThomas from "@/assets/team-thomas-leroy.jpg";
 
+// Animated Section wrapper component
+const AnimatedSectionWrapper = ({ 
+  children, 
+  className = "" 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+}) => {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  return (
+    <motion.section
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
 const About = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const heroInView = useInView(heroRef, { once: true, margin: "-50px" });
+
   const team = [
     {
       name: "Dr. Sophie Martin",
@@ -106,6 +146,55 @@ const About = () => {
     "CEA"
   ];
 
+  const headerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" as const },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        delay: i * 0.1,
+        ease: "easeOut" as const,
+      },
+    }),
+  };
+
+  const timelineVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        delay: i * 0.15,
+        ease: "easeOut" as const,
+      },
+    }),
+  };
+
+  const statVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: (i: number) => ({
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        delay: i * 0.1,
+        ease: "easeOut" as const,
+      },
+    }),
+  };
+
   return (
     <div className="min-h-screen relative">
       <Watermark />
@@ -113,63 +202,80 @@ const About = () => {
         <Header />
         <main className="pt-24">
           {/* Hero Section */}
-          <section className="py-16 bg-gradient-to-b from-primary-light/30 to-background">
+          <motion.section 
+            ref={heroRef}
+            className="py-16 bg-gradient-to-b from-primary-light/30 to-background"
+            initial="hidden"
+            animate={heroInView ? "visible" : "hidden"}
+          >
             <div className="container mx-auto px-6 text-center">
-              <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-6">
-                🏢 À Propos de DiagMind.AI
-              </Badge>
-              <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
+              <motion.div variants={headerVariants}>
+                <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-6">
+                  🏢 À Propos de DiagMind.AI
+                </Badge>
+              </motion.div>
+              <motion.h1 
+                className="text-4xl lg:text-5xl font-bold text-foreground mb-6"
+                variants={headerVariants}
+              >
                 Notre Mission : <span className="bg-gradient-hero bg-clip-text text-transparent">Sauver des Vies</span>
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              </motion.h1>
+              <motion.p 
+                className="text-xl text-muted-foreground max-w-3xl mx-auto"
+                variants={headerVariants}
+              >
                 DiagMind.AI est une startup française deep-tech spécialisée dans l'intelligence artificielle appliquée au diagnostic médical. Notre objectif : démocratiser l'accès à des diagnostics précoces et précis.
-              </p>
+              </motion.p>
             </div>
-          </section>
+          </motion.section>
 
           {/* Vision & Mission */}
-          <section className="py-16">
+          <AnimatedSectionWrapper className="py-16">
             <div className="container mx-auto px-6">
               <div className="grid md:grid-cols-2 gap-8">
-                <Card className="bg-background border-border hover:shadow-medical transition-all duration-300">
-                  <CardHeader>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary-light to-accent-light rounded-xl flex items-center justify-center">
-                        <Target className="h-6 w-6 text-primary" />
+                <motion.div custom={0} variants={cardVariants}>
+                  <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 h-full">
+                    <CardHeader>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary-light to-accent-light rounded-xl flex items-center justify-center">
+                          <Target className="h-6 w-6 text-primary" />
+                        </div>
+                        <CardTitle className="text-xl">Notre Vision</CardTitle>
                       </div>
-                      <CardTitle className="text-xl">Notre Vision</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Un monde où chaque patient bénéficie d'un diagnostic précoce et précis, indépendamment de sa localisation géographique. Nous croyons que l'IA peut être le grand égalisateur dans l'accès aux soins de santé de qualité.
-                    </p>
-                  </CardContent>
-                </Card>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Un monde où chaque patient bénéficie d'un diagnostic précoce et précis, indépendamment de sa localisation géographique. Nous croyons que l'IA peut être le grand égalisateur dans l'accès aux soins de santé de qualité.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
 
-                <Card className="bg-background border-border hover:shadow-medical transition-all duration-300">
-                  <CardHeader>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary-light to-accent-light rounded-xl flex items-center justify-center">
-                        <Lightbulb className="h-6 w-6 text-primary" />
+                <motion.div custom={1} variants={cardVariants}>
+                  <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 h-full">
+                    <CardHeader>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-primary-light to-accent-light rounded-xl flex items-center justify-center">
+                          <Lightbulb className="h-6 w-6 text-primary" />
+                        </div>
+                        <CardTitle className="text-xl">Notre Mission</CardTitle>
                       </div>
-                      <CardTitle className="text-xl">Notre Mission</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Développer des outils d'aide au diagnostic basés sur l'IA qui augmentent les capacités des professionnels de santé, réduisent les délais de diagnostic et améliorent les résultats pour les patients.
-                    </p>
-                  </CardContent>
-                </Card>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Développer des outils d'aide au diagnostic basés sur l'IA qui augmentent les capacités des professionnels de santé, réduisent les délais de diagnostic et améliorent les résultats pour les patients.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </div>
             </div>
-          </section>
+          </AnimatedSectionWrapper>
 
           {/* Team Section */}
-          <section className="py-16 bg-muted/20">
+          <AnimatedSectionWrapper className="py-16 bg-muted/20">
             <div className="container mx-auto px-6">
-              <div className="text-center mb-12">
+              <motion.div className="text-center mb-12" variants={headerVariants}>
                 <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-4">
                   <Users className="w-4 h-4 inline mr-2" />
                   Notre Équipe
@@ -180,44 +286,48 @@ const About = () => {
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   Notre équipe réunit des médecins, des chercheurs en IA et des ingénieurs pour créer des solutions qui font la différence.
                 </p>
-              </div>
+              </motion.div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {team.map((member, index) => (
-                  <Card 
-                    key={index} 
-                    className="bg-background border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in"
-                    style={{ animationDelay: `${index * 100}ms` }}
+                  <motion.div 
+                    key={index}
+                    custom={index}
+                    variants={cardVariants}
                   >
-                    <CardHeader className="text-center pb-2">
-                      <img 
-                        src={member.photo} 
-                        alt={member.name}
-                        className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary/20 shadow-medical"
-                      />
-                      <CardTitle className="text-lg">{member.name}</CardTitle>
-                      <p className="text-sm text-primary font-medium">{member.role}</p>
-                    </CardHeader>
-                    <CardContent className="text-center">
-                      <p className="text-sm text-muted-foreground mb-4">{member.description}</p>
-                      <div className="flex flex-wrap justify-center gap-1">
-                        {member.expertise.map((skill, idx) => (
-                          <Badge key={idx} variant="secondary" className="text-xs">
-                            {skill}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
+                    <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 h-full">
+                      <CardHeader className="text-center pb-2">
+                        <motion.img 
+                          src={member.photo} 
+                          alt={member.name}
+                          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary/20 shadow-medical"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                        <CardTitle className="text-lg">{member.name}</CardTitle>
+                        <p className="text-sm text-primary font-medium">{member.role}</p>
+                      </CardHeader>
+                      <CardContent className="text-center">
+                        <p className="text-sm text-muted-foreground mb-4">{member.description}</p>
+                        <div className="flex flex-wrap justify-center gap-1">
+                          {member.expertise.map((skill, idx) => (
+                            <Badge key={idx} variant="secondary" className="text-xs">
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
             </div>
-          </section>
+          </AnimatedSectionWrapper>
 
           {/* Timeline / Milestones */}
-          <section className="py-16">
+          <AnimatedSectionWrapper className="py-16">
             <div className="container mx-auto px-6">
-              <div className="text-center mb-12">
+              <motion.div className="text-center mb-12" variants={headerVariants}>
                 <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-4">
                   <Award className="w-4 h-4 inline mr-2" />
                   Notre Parcours
@@ -225,20 +335,29 @@ const About = () => {
                 <h2 className="text-3xl font-bold text-foreground mb-4">
                   De la Recherche à l'Impact Clinique
                 </h2>
-              </div>
+              </motion.div>
 
               <div className="max-w-4xl mx-auto">
                 <div className="relative">
                   {/* Timeline line */}
-                  <div className="absolute left-8 md:left-1/2 md:transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-accent to-primary/50"></div>
+                  <motion.div 
+                    className="absolute left-8 md:left-1/2 md:transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-accent to-primary/50"
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    style={{ originY: 0 }}
+                  />
                   
                   {milestones.map((milestone, index) => (
-                    <div 
-                      key={index} 
+                    <motion.div 
+                      key={index}
+                      custom={index}
+                      variants={timelineVariants}
                       className={`relative flex flex-col md:flex-row items-start md:items-center mb-12 ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}
                     >
                       <div className={`w-full md:w-5/12 pl-20 md:pl-0 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
-                        <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: `${index * 150}ms` }}>
+                        <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 overflow-hidden">
                           <div className="bg-gradient-to-r from-primary/10 to-accent/10 px-4 py-2 border-b border-border">
                             <div className="flex items-center justify-between">
                               <span className="text-2xl font-bold text-primary">{milestone.year}</span>
@@ -256,29 +375,42 @@ const About = () => {
                             <p className="text-sm text-muted-foreground mb-3">{milestone.event}</p>
                             <ul className="space-y-1.5">
                               {milestone.details.map((detail, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                <motion.li 
+                                  key={idx} 
+                                  className="flex items-start gap-2 text-xs text-muted-foreground"
+                                  initial={{ opacity: 0, x: -10 }}
+                                  whileInView={{ opacity: 1, x: 0 }}
+                                  viewport={{ once: true }}
+                                  transition={{ delay: 0.3 + idx * 0.1 }}
+                                >
                                   <CheckCircle2 className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
                                   <span>{detail}</span>
-                                </li>
+                                </motion.li>
                               ))}
                             </ul>
                           </CardContent>
                         </Card>
                       </div>
-                      <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-5 h-5 bg-primary rounded-full border-4 border-background shadow-lg flex items-center justify-center">
+                      <motion.div 
+                        className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-5 h-5 bg-primary rounded-full border-4 border-background shadow-lg flex items-center justify-center"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.15, type: "spring", stiffness: 200 }}
+                      >
                         <div className="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
             </div>
-          </section>
+          </AnimatedSectionWrapper>
 
           {/* Partners */}
-          <section className="py-16 bg-muted/20">
+          <AnimatedSectionWrapper className="py-16 bg-muted/20">
             <div className="container mx-auto px-6">
-              <div className="text-center mb-12">
+              <motion.div className="text-center mb-12" variants={headerVariants}>
                 <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-4">
                   <Handshake className="w-4 h-4 inline mr-2" />
                   Nos Partenaires
@@ -289,59 +421,71 @@ const About = () => {
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   Nous collaborons avec les institutions de santé et de recherche les plus prestigieuses.
                 </p>
-              </div>
+              </motion.div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 {partners.map((partner, index) => (
-                  <Card 
-                    key={index} 
-                    className="bg-background border-border hover:shadow-medical transition-all duration-300 flex items-center justify-center p-6 opacity-0 animate-fade-in"
-                    style={{ animationDelay: `${index * 100}ms` }}
+                  <motion.div
+                    key={index}
+                    custom={index}
+                    variants={cardVariants}
+                    whileHover={{ y: -5 }}
                   >
-                    <div className="text-center">
-                      <Building2 className="h-10 w-10 text-primary mx-auto mb-2" />
-                      <span className="text-sm font-medium text-foreground">{partner}</span>
-                    </div>
-                  </Card>
+                    <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 flex items-center justify-center p-6 h-full">
+                      <div className="text-center">
+                        <Building2 className="h-10 w-10 text-primary mx-auto mb-2" />
+                        <span className="text-sm font-medium text-foreground">{partner}</span>
+                      </div>
+                    </Card>
+                  </motion.div>
                 ))}
               </div>
             </div>
-          </section>
+          </AnimatedSectionWrapper>
 
           {/* R&D Section */}
-          <section className="py-16">
+          <AnimatedSectionWrapper className="py-16">
             <div className="container mx-auto px-6">
-              <div className="text-center mb-12">
+              <motion.div className="text-center mb-12" variants={headerVariants}>
                 <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-4">
                   🔬 Recherche & Développement
                 </Badge>
                 <h2 className="text-3xl font-bold text-foreground mb-4">
                   Innovation Continue
                 </h2>
-              </div>
+              </motion.div>
 
               <div className="grid md:grid-cols-3 gap-8">
-                <Card className="bg-background border-border hover:shadow-medical transition-all duration-300">
-                  <CardContent className="pt-6 text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">12+</div>
-                    <div className="text-muted-foreground">Publications scientifiques</div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-background border-border hover:shadow-medical transition-all duration-300">
-                  <CardContent className="pt-6 text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">5</div>
-                    <div className="text-muted-foreground">Brevets déposés</div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-background border-border hover:shadow-medical transition-all duration-300">
-                  <CardContent className="pt-6 text-center">
-                    <div className="text-4xl font-bold text-primary mb-2">3</div>
-                    <div className="text-muted-foreground">Projets ANR en cours</div>
-                  </CardContent>
-                </Card>
+                {[
+                  { value: "12+", label: "Publications scientifiques" },
+                  { value: "5", label: "Brevets déposés" },
+                  { value: "3", label: "Projets ANR en cours" }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={index}
+                    custom={index}
+                    variants={statVariants}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <Card className="bg-background border-border hover:shadow-medical transition-all duration-300">
+                      <CardContent className="pt-6 text-center">
+                        <motion.div 
+                          className="text-4xl font-bold text-primary mb-2"
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.2 + index * 0.1, type: "spring", stiffness: 200 }}
+                        >
+                          {stat.value}
+                        </motion.div>
+                        <div className="text-muted-foreground">{stat.label}</div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </section>
+          </AnimatedSectionWrapper>
         </main>
         <Footer />
       </div>
