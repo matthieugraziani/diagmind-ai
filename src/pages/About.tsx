@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Watermark from "@/components/Watermark";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Target, Lightbulb, Award, Building2, Handshake } from "lucide-react";
+import { Users, Target, Lightbulb, Award, Building2, Handshake, CheckCircle2, Clock, Rocket } from "lucide-react";
 
 import teamSophie from "@/assets/team-sophie-martin.jpg";
 import teamAlexandre from "@/assets/team-alexandre-dubois.jpg";
@@ -43,10 +43,58 @@ const About = () => {
   ];
 
   const milestones = [
-    { year: "2026", event: "CHU pilote, Marquage CE et Validation HAS" },
-    { year: "2027", event: "Déploiement national et remboursement Sécurité Sociale" },
-    { year: "2028", event: "Extension à d'autres pathologies cérébrales" },
-    { year: "2030", event: "Expansion internationale" }
+    { 
+      year: "2026", 
+      title: "Phase Pilote & Certifications",
+      event: "CHU pilote, Marquage CE et Validation HAS",
+      details: [
+        "Lancement de l'étude pilote au CHU de Lyon avec 500 patients",
+        "Obtention du marquage CE classe IIa (dispositif médical)",
+        "Validation par la Haute Autorité de Santé (HAS)",
+        "Certification ISO 27001 et conformité RGPD complète",
+        "Publication des résultats cliniques dans des revues à comité de lecture"
+      ],
+      status: "upcoming"
+    },
+    { 
+      year: "2027", 
+      title: "Déploiement National",
+      event: "Déploiement national et remboursement Sécurité Sociale",
+      details: [
+        "Extension à l'ensemble des 32 CHU français",
+        "Inscription sur la Liste des Produits et Prestations Remboursables (LPPR)",
+        "Remboursement par l'Assurance Maladie",
+        "Formation de 2 000+ radiologues et neurologues",
+        "Intégration aux systèmes d'information hospitaliers (SIH)"
+      ],
+      status: "upcoming"
+    },
+    { 
+      year: "2028", 
+      title: "Expansion Thérapeutique",
+      event: "Extension à d'autres pathologies cérébrales",
+      details: [
+        "Détection de la maladie de Parkinson",
+        "Analyse des AVC et lésions vasculaires cérébrales",
+        "Détection précoce de la sclérose en plaques",
+        "Algorithmes de suivi longitudinal des patients",
+        "Partenariats avec 50+ centres de recherche européens"
+      ],
+      status: "upcoming"
+    },
+    { 
+      year: "2030", 
+      title: "Leader Mondial",
+      event: "Expansion internationale",
+      details: [
+        "Déploiement dans 15+ pays européens",
+        "Homologation FDA aux États-Unis",
+        "Expansion au Canada, Japon et Australie",
+        "1 million+ d'examens analysés par an",
+        "Centre de R&D international à Singapour"
+      ],
+      status: "upcoming"
+    }
   ];
 
   const partners = [
@@ -179,25 +227,47 @@ const About = () => {
                 </h2>
               </div>
 
-              <div className="max-w-3xl mx-auto">
+              <div className="max-w-4xl mx-auto">
                 <div className="relative">
                   {/* Timeline line */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary to-accent"></div>
+                  <div className="absolute left-8 md:left-1/2 md:transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-accent to-primary/50"></div>
                   
                   {milestones.map((milestone, index) => (
                     <div 
                       key={index} 
-                      className={`relative flex items-center mb-8 ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}
+                      className={`relative flex flex-col md:flex-row items-start md:items-center mb-12 ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}
                     >
-                      <div className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
-                        <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+                      <div className={`w-full md:w-5/12 pl-20 md:pl-0 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
+                        <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: `${index * 150}ms` }}>
+                          <div className="bg-gradient-to-r from-primary/10 to-accent/10 px-4 py-2 border-b border-border">
+                            <div className="flex items-center justify-between">
+                              <span className="text-2xl font-bold text-primary">{milestone.year}</span>
+                              <Badge variant="outline" className="text-xs text-amber-600 border-amber-400 bg-amber-50 flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                À venir
+                              </Badge>
+                            </div>
+                          </div>
                           <CardContent className="p-4">
-                            <span className="text-2xl font-bold text-primary">{milestone.year}</span>
-                            <p className="text-muted-foreground mt-1">{milestone.event}</p>
+                            <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
+                              <Rocket className="w-4 h-4 text-primary" />
+                              {milestone.title}
+                            </h4>
+                            <p className="text-sm text-muted-foreground mb-3">{milestone.event}</p>
+                            <ul className="space-y-1.5">
+                              {milestone.details.map((detail, idx) => (
+                                <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                  <CheckCircle2 className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
+                                  <span>{detail}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </CardContent>
                         </Card>
                       </div>
-                      <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background"></div>
+                      <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-5 h-5 bg-primary rounded-full border-4 border-background shadow-lg flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
                     </div>
                   ))}
                 </div>
