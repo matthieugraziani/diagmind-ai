@@ -274,7 +274,7 @@ const SocietalImpactSection = () => {
           <blockquote className="text-lg italic text-muted-foreground max-w-3xl mx-auto">
             "Notre mission est de garantir que chaque Français, qu'il vive à Paris ou dans un village rural, puisse bénéficier d'un diagnostic de qualité égale. L'IA n'est pas là pour remplacer les radiologues, mais pour leur permettre d'être présents là où on a le plus besoin d'eux."
           </blockquote>
-          <p className="mt-4 text-sm text-primary font-medium">— Dr. Sophie Martin, CEO de DiagMind.AI</p>
+          <p className="mt-4 text-sm text-primary font-medium">— Matthieu Graziani, Fondateur de DiagMind.AI</p>
         </motion.div>
       </div>
     </motion.section>
