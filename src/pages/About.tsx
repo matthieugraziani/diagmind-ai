@@ -7,10 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Target, Lightbulb, Award, Building2, Handshake, CheckCircle2, Clock, Rocket } from "lucide-react";
 
-import teamSophie from "@/assets/team-sophie-martin.jpg";
-import teamAlexandre from "@/assets/team-alexandre-dubois.jpg";
-import teamMarie from "@/assets/team-marie-chen.jpg";
-import teamThomas from "@/assets/team-thomas-leroy.jpg";
+
 
 // Animated Section wrapper component
 const AnimatedSectionWrapper = ({ 
@@ -51,35 +48,18 @@ const About = () => {
   const heroRef = useRef<HTMLElement>(null);
   const heroInView = useInView(heroRef, { once: true, margin: "-50px" });
 
-  const team = [
-    {
-      name: "Dr. Sophie Martin",
-      role: "CEO & Co-fondatrice",
-      description: "Neurologue et chercheuse en IA médicale, 15 ans d'expérience en imagerie cérébrale.",
-      expertise: ["Neurologie", "IA Médicale", "Recherche Clinique"],
-      photo: teamSophie
-    },
-    {
-      name: "Alexandre Dubois",
-      role: "CTO & Co-fondateur",
-      description: "Expert en deep learning et vision par ordinateur, ancien chercheur au CNRS.",
-      expertise: ["Deep Learning", "Computer Vision", "MLOps"],
-      photo: teamAlexandre
-    },
-    {
-      name: "Dr. Marie Chen",
-      role: "Directrice Scientifique",
-      description: "Spécialiste en radiologie interventionnelle et validation clinique des algorithmes IA.",
-      expertise: ["Radiologie", "Validation Clinique", "Protocoles"],
-      photo: teamMarie
-    },
-    {
-      name: "Thomas Leroy",
-      role: "Directeur Produit",
-      description: "10 ans d'expérience dans le développement de solutions healthtech.",
-      expertise: ["Product Management", "UX/UI", "HealthTech"],
-      photo: teamThomas
-    }
+  const founder = {
+    name: "Matthieu Graziani",
+    role: "Fondateur & CEO",
+    description: "Visionnaire et entrepreneur passionné par l'innovation en santé. Matthieu a fondé DiagMind.AI avec la conviction que l'IA peut révolutionner le diagnostic médical et sauver des vies.",
+    expertise: ["Entrepreneuriat", "HealthTech", "Innovation", "Vision Stratégique"]
+  };
+
+  const upcomingTeam = [
+    { role: "CTO", description: "Expert en deep learning et vision par ordinateur" },
+    { role: "Directeur Scientifique", description: "Spécialiste en radiologie et validation clinique" },
+    { role: "Directeur Produit", description: "Expert en développement de solutions healthtech" },
+    { role: "Responsable Médical", description: "Médecin spécialisé en imagerie médicale" }
   ];
 
   const milestones = [
@@ -284,38 +264,67 @@ const About = () => {
                   Des Experts Passionnés
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Notre équipe réunit des médecins, des chercheurs en IA et des ingénieurs pour créer des solutions qui font la différence.
+                  Notre équipe se construit autour d'une vision commune : révolutionner le diagnostic médical grâce à l'IA.
                 </p>
               </motion.div>
 
+              {/* Founder Card */}
+              <div className="max-w-2xl mx-auto mb-12">
+                <motion.div custom={0} variants={cardVariants}>
+                  <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 hover:shadow-medical transition-all duration-300">
+                    <CardHeader className="text-center pb-2">
+                      <motion.div 
+                        className="w-32 h-32 rounded-full mx-auto mb-4 bg-gradient-to-br from-primary to-accent flex items-center justify-center border-4 border-primary/20 shadow-medical"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <span className="text-4xl font-bold text-white">MG</span>
+                      </motion.div>
+                      <Badge variant="default" className="mx-auto mb-2">Fondateur</Badge>
+                      <CardTitle className="text-2xl">{founder.name}</CardTitle>
+                      <p className="text-lg text-primary font-medium">{founder.role}</p>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <p className="text-muted-foreground mb-6 max-w-lg mx-auto">{founder.description}</p>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {founder.expertise.map((skill, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-sm">
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </div>
+
+              {/* Upcoming Team */}
+              <motion.div className="text-center mb-8" variants={headerVariants}>
+                <h3 className="text-xl font-semibold text-foreground mb-2">Équipe à venir</h3>
+                <p className="text-sm text-muted-foreground">Nous recrutons activement pour constituer notre équipe de choc</p>
+              </motion.div>
+
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {team.map((member, index) => (
+                {upcomingTeam.map((position, index) => (
                   <motion.div 
                     key={index}
-                    custom={index}
+                    custom={index + 1}
                     variants={cardVariants}
                   >
-                    <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 h-full">
+                    <Card className="bg-background/50 border-dashed border-2 border-muted-foreground/30 hover:border-primary/50 transition-all duration-300 h-full">
                       <CardHeader className="text-center pb-2">
-                        <motion.img 
-                          src={member.photo} 
-                          alt={member.name}
-                          className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary/20 shadow-medical"
-                          whileHover={{ scale: 1.1 }}
+                        <motion.div 
+                          className="w-20 h-20 rounded-full mx-auto mb-4 bg-muted/50 flex items-center justify-center border-2 border-dashed border-muted-foreground/30"
+                          whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.3 }}
-                        />
-                        <CardTitle className="text-lg">{member.name}</CardTitle>
-                        <p className="text-sm text-primary font-medium">{member.role}</p>
+                        >
+                          <Users className="w-8 h-8 text-muted-foreground/50" />
+                        </motion.div>
+                        <CardTitle className="text-lg text-muted-foreground">{position.role}</CardTitle>
+                        <Badge variant="outline" className="mx-auto mt-2 text-xs">Recrutement en cours</Badge>
                       </CardHeader>
                       <CardContent className="text-center">
-                        <p className="text-sm text-muted-foreground mb-4">{member.description}</p>
-                        <div className="flex flex-wrap justify-center gap-1">
-                          {member.expertise.map((skill, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              {skill}
-                            </Badge>
-                          ))}
-                        </div>
+                        <p className="text-sm text-muted-foreground/70">{position.description}</p>
                       </CardContent>
                     </Card>
                   </motion.div>
