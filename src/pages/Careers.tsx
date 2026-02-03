@@ -43,6 +43,7 @@ import {
   Activity,
 } from "lucide-react";
 import { toast } from "sonner";
+import pacsInterfaceMockup from "@/assets/pacs-interface-mockup.jpg";
 
 const Careers = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -336,10 +337,31 @@ const Careers = () => {
               L'IA qui s'intègre à votre{" "}
               <span className="bg-gradient-hero bg-clip-text text-transparent">workflow existant</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
               DiagMind s'intègre directement dans les systèmes PACS des établissements de santé, 
               révolutionnant le quotidien des radiologues sans bouleverser leurs habitudes.
             </p>
+            
+            {/* PACS Interface Mockup */}
+            <motion.div 
+              className="relative max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-border"
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              <img 
+                src={pacsInterfaceMockup} 
+                alt="Interface PACS avec intégration DiagMind - analyse IRM cérébrale avec annotations IA" 
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm">
+                  <Monitor className="w-3 h-3 mr-1" />
+                  Interface PACS avec overlay DiagMind
+                </Badge>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Storytelling Timeline */}
