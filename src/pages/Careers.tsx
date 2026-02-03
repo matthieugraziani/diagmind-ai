@@ -35,14 +35,22 @@ import {
   Send,
   Building2,
   Euro,
+  Monitor,
+  Zap,
+  ArrowRight,
+  CheckCircle2,
+  Timer,
+  Activity,
 } from "lucide-react";
 import { toast } from "sonner";
 
 const Careers = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null);
   const jobsRef = useRef<HTMLDivElement>(null);
   const benefitsRef = useRef<HTMLDivElement>(null);
   const heroInView = useInView(heroRef, { once: true });
+  const storyInView = useInView(storyRef, { once: true, margin: "-100px" });
   const jobsInView = useInView(jobsRef, { once: true, margin: "-100px" });
   const benefitsInView = useInView(benefitsRef, { once: true, margin: "-100px" });
 
@@ -304,6 +312,200 @@ const Careers = () => {
         </div>
       </motion.section>
 
+      {/* PACS Integration Storytelling Section */}
+      <motion.section
+        ref={storyRef}
+        className="py-20 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden"
+        initial="hidden"
+        animate={storyInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        {/* Background decorations */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-1/3 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="absolute bottom-1/4 right-0 w-1/3 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div className="text-center mb-16" variants={itemVariants}>
+            <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-4">
+              <Monitor className="w-4 h-4 inline mr-2" />
+              Notre Vision Produit
+            </Badge>
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              L'IA qui s'intègre à votre{" "}
+              <span className="bg-gradient-hero bg-clip-text text-transparent">workflow existant</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              DiagMind s'intègre directement dans les systèmes PACS des établissements de santé, 
+              révolutionnant le quotidien des radiologues sans bouleverser leurs habitudes.
+            </p>
+          </motion.div>
+
+          {/* Storytelling Timeline */}
+          <div className="max-w-5xl mx-auto">
+            {/* Step 1 */}
+            <motion.div 
+              className="flex flex-col lg:flex-row items-center gap-8 mb-16"
+              variants={itemVariants}
+            >
+              <div className="flex-1 order-2 lg:order-1">
+                <div className="bg-card border border-border rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-primary font-bold">1</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">Le radiologue ouvre un examen IRM</h3>
+                  </div>
+                  <p className="text-muted-foreground mb-4">
+                    7h30, CHU de Toulon. Le Dr. Martin commence sa journée. Elle ouvre son viewer PACS habituel 
+                    et charge une IRM cérébrale. Rien ne change dans son interface — elle travaille comme d'habitude.
+                  </p>
+                  <div className="flex items-center gap-2 text-sm text-primary">
+                    <Monitor className="w-4 h-4" />
+                    <span>Interface PACS inchangée</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-shrink-0 order-1 lg:order-2">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                  <Monitor className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Connector Line */}
+            <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-primary/50 to-primary/20" style={{ marginTop: "-3rem" }} />
+
+            {/* Step 2 */}
+            <motion.div 
+              className="flex flex-col lg:flex-row items-center gap-8 mb-16"
+              variants={itemVariants}
+            >
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg">
+                  <Zap className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="bg-card border border-border rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                      <span className="text-accent font-bold">2</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">DiagMind analyse en temps réel</h3>
+                  </div>
+                  <p className="text-muted-foreground mb-4">
+                    En arrière-plan, notre IA analyse automatiquement les coupes cérébrales. En quelques secondes, 
+                    elle détecte des patterns invisibles à l'œil nu, signes précoces de pathologies neurodégénératives.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Timer className="w-4 h-4 text-accent" />
+                      <span className="text-muted-foreground">Analyse en 3 min</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Brain className="w-4 h-4 text-accent" />
+                      <span className="text-muted-foreground">IA deep learning</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Step 3 */}
+            <motion.div 
+              className="flex flex-col lg:flex-row items-center gap-8 mb-16"
+              variants={itemVariants}
+            >
+              <div className="flex-1 order-2 lg:order-1">
+                <div className="bg-card border border-border rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-primary font-bold">3</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">Résultats intégrés au rapport</h3>
+                  </div>
+                  <p className="text-muted-foreground mb-4">
+                    Les résultats apparaissent directement dans le viewer : zones d'intérêt surlignées, 
+                    score de risque calculé, rapport pré-rempli. Le Dr. Martin n'a plus qu'à valider et affiner son diagnostic.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    <Badge variant="outline" className="bg-primary/5">
+                      <CheckCircle2 className="w-3 h-3 mr-1" />
+                      Zones annotées
+                    </Badge>
+                    <Badge variant="outline" className="bg-primary/5">
+                      <Activity className="w-3 h-3 mr-1" />
+                      Score de risque
+                    </Badge>
+                    <Badge variant="outline" className="bg-primary/5">
+                      <ArrowRight className="w-3 h-3 mr-1" />
+                      Rapport généré
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-shrink-0 order-1 lg:order-2">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                  <CheckCircle2 className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Impact Stats */}
+            <motion.div 
+              className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-2xl p-8 border border-primary/20"
+              variants={itemVariants}
+            >
+              <h3 className="text-xl font-bold text-foreground text-center mb-8">
+                L'impact au quotidien
+              </h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-2">
+                    6x
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Plus d'examens analysés<br />par radiologue/jour
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-2">
+                    -15 min
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Temps gagné<br />par analyse
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-2">
+                    0
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Changement d'outil<br />pour le praticien
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Call to Action */}
+            <motion.div 
+              className="text-center mt-12"
+              variants={itemVariants}
+            >
+              <p className="text-lg text-muted-foreground mb-4">
+                Vous voulez contribuer à cette révolution ?
+              </p>
+              <Button size="lg" className="group" onClick={() => document.getElementById('jobs-section')?.scrollIntoView({ behavior: 'smooth' })}>
+                Découvrir nos postes
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Benefits Section */}
       <motion.section
         ref={benefitsRef}
@@ -349,6 +551,7 @@ const Careers = () => {
 
       {/* Jobs Section */}
       <motion.section
+        id="jobs-section"
         ref={jobsRef}
         className="py-20"
         initial="hidden"
