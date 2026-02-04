@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,7 +7,15 @@ import pacsInterfaceMockup from "@/assets/pacs-interface-mockup.jpg";
 
 const HowItWorksSection = () => {
   const ref = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // Parallax effect for PACS image
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -104,19 +112,21 @@ const HowItWorksSection = () => {
             révolutionnant le quotidien des radiologues sans bouleverser leurs habitudes.
           </p>
           
-          {/* PACS Interface Mockup */}
+          {/* PACS Interface Mockup with Parallax */}
           <motion.div 
+            ref={imageRef}
             className="relative max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-border"
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            <img 
+            <motion.img 
               src={pacsInterfaceMockup} 
               alt="Interface PACS avec intégration DiagMind - analyse IRM cérébrale avec annotations IA" 
               className="w-full h-auto"
+              style={{ y: imageY }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-4 left-4 right-4">
               <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm">
                 <Monitor className="w-3 h-3 mr-1" />
