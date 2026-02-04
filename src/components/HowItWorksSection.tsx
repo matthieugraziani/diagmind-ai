@@ -136,55 +136,88 @@ const HowItWorksSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Storytelling Timeline */}
-        <motion.div 
-          className="grid md:grid-cols-3 gap-8 mb-16"
-          variants={containerVariants}
-        >
+        {/* Vertical Timeline */}
+        <div className="relative max-w-3xl mx-auto mb-16">
+          {/* Animated vertical line */}
+          <motion.div 
+            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary to-primary/20 md:-translate-x-1/2"
+            initial={{ scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+            style={{ transformOrigin: "top" }}
+          />
+
           {storySteps.map((step, index) => {
             const Icon = step.icon;
+            const isEven = index % 2 === 0;
+            
             return (
               <motion.div
                 key={index}
+                className={`relative flex items-center mb-12 last:mb-0 ${
+                  isEven ? "md:flex-row" : "md:flex-row-reverse"
+                }`}
                 variants={itemVariants}
               >
-                <Card className="relative bg-background border-border hover:shadow-medical transition-all duration-300 hover:-translate-y-2 h-full overflow-hidden">
-                  {/* Step Number */}
-                  <div className="absolute top-4 right-4 text-6xl font-bold text-muted/20">
-                    {step.number}
+                {/* Timeline Node */}
+                <motion.div 
+                  className="absolute left-6 md:left-1/2 w-12 h-12 -translate-x-1/2 z-20"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 + index * 0.2 }}
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center shadow-lg ring-4 ring-background">
+                    <Icon className="h-5 w-5 text-white" />
                   </div>
-                  
-                  <CardContent className="p-6 space-y-4 relative z-10">
-                    {/* Icon */}
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-light to-accent-light rounded-xl flex items-center justify-center">
-                      <Icon className="h-6 w-6 text-primary" />
+                </motion.div>
+
+                {/* Content Card */}
+                <motion.div 
+                  className={`w-full pl-20 md:pl-0 md:w-[calc(50%-3rem)] ${
+                    isEven ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
+                  }`}
+                  initial={{ opacity: 0, x: isEven ? -30 : 30 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? -30 : 30 }}
+                  transition={{ duration: 0.6, delay: 0.6 + index * 0.2 }}
+                >
+                  <Card className="relative bg-background border-border hover:shadow-medical transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                    {/* Step Number Background */}
+                    <div className={`absolute top-4 ${isEven ? "md:left-4 right-4 md:right-auto" : "right-4"} text-6xl font-bold text-muted/20`}>
+                      {step.number}
                     </div>
                     
-                    {/* Context */}
-                    <p className="text-xs text-muted-foreground italic">
-                      {step.context}
-                    </p>
-                    
-                    {/* Title */}
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {step.title}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {step.description}
-                    </p>
-                    
-                    {/* Highlight Badge */}
-                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                      {step.highlight}
-                    </Badge>
-                  </CardContent>
-                </Card>
+                    <CardContent className="p-6 space-y-3 relative z-10">
+                      {/* Context */}
+                      <p className="text-xs text-muted-foreground italic">
+                        {step.context}
+                      </p>
+                      
+                      {/* Title */}
+                      <h3 className="text-lg font-semibold text-foreground">
+                        {step.title}
+                      </h3>
+                      
+                      {/* Description */}
+                      <p className="text-muted-foreground text-sm leading-relaxed md:text-left">
+                        {step.description}
+                      </p>
+                      
+                      {/* Highlight Badge */}
+                      <div className={`${isEven ? "md:text-right" : ""}`}>
+                        <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                          {step.highlight}
+                        </Badge>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Empty space for alternating layout on desktop */}
+                <div className="hidden md:block md:w-[calc(50%-3rem)]" />
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* Impact Stats */}
         <motion.div 
