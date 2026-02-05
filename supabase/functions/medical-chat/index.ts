@@ -34,7 +34,8 @@ serve(async (req) => {
       validatedData = requestSchema.parse(rawBody);
     } catch (validationError) {
       if (validationError instanceof z.ZodError) {
-        console.error("Validation error:", validationError.errors);
+        // Log validation errors without exposing details
+        console.warn("Request validation failed");
         return new Response(JSON.stringify({ 
           error: "Données invalides",
           details: validationError.errors.map(e => e.message)
@@ -62,7 +63,8 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+      console.error("Configuration error: API key not set");
+      throw new Error("Service configuration error");
     }
 
     const authHeader = req.headers.get('Authorization');
@@ -87,9 +89,11 @@ serve(async (req) => {
       });
     }
 
-    console.log("Medical chat request from user:", user.id);
-    console.log("Conversation ID:", conversationId);
-    console.log("Messages count:", messages.length);
+    // Log request without exposing sensitive data
+    console.log("Medical chat request received", { 
+      messageCount: messages.length,
+      timestamp: new Date().toISOString()
+    });
 
     const systemPrompt = `Tu es DiagMind.AI, un assistant médical spécialisé en aide au diagnostic de tumeurs cérébrales par imagerie médicale. 
 
@@ -121,9 +125,8 @@ Ton objectif : être un outil d'aide à la décision fiable et responsable.`;
     });
 
     if (!response.ok) {
-      console.error("AI gateway error:", response.status);
-      const errorText = await response.text();
-      console.error("Error details:", errorText);
+      // Log error type without exposing details
+      console.error("AI gateway error", { status: response.status });
       
       if (response.status === 429) {
         return new Response(JSON.stringify({ 
@@ -149,13 +152,17 @@ Ton objectif : être un outil d'aide à la décision fiable et responsable.`;
       });
     }
 
-    console.log("Streaming response to client");
+    console.log("Response streaming started");
     return new Response(response.body, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
     
   } catch (error) {
-    console.error("Medical chat error:", error);
+    // Log error type without exposing stack trace or sensitive details
+    console.error("Chat error occurred", {
+      type: error instanceof Error ? error.name : 'Unknown',
+      timestamp: new Date().toISOString()
+    });
     return new Response(
       JSON.stringify({ error: "Une erreur s'est produite" }),
       {
