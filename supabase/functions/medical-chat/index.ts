@@ -1,10 +1,24 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Input validation schemas
+const messageSchema = z.object({
+  role: z.enum(['user', 'assistant']),
+  content: z.string().min(1, "Message content cannot be empty").max(4000, "Message content too long"),
+});
+
+const requestSchema = z.object({
+  messages: z.array(messageSchema)
+    .min(1, "At least one message required")
+    .max(50, "Too many messages in context"),
+  conversationId: z.string().uuid("Invalid conversation ID format"),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -12,7 +26,39 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, conversationId } = await req.json();
+    // Parse and validate input
+    const rawBody = await req.json();
+    
+    let validatedData;
+    try {
+      validatedData = requestSchema.parse(rawBody);
+    } catch (validationError) {
+      if (validationError instanceof z.ZodError) {
+        console.error("Validation error:", validationError.errors);
+        return new Response(JSON.stringify({ 
+          error: "Données invalides",
+          details: validationError.errors.map(e => e.message)
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      throw validationError;
+    }
+
+    const { messages, conversationId } = validatedData;
+
+    // Validate total content length to prevent abuse
+    const totalChars = messages.reduce((sum, m) => sum + m.content.length, 0);
+    if (totalChars > 50000) {
+      return new Response(JSON.stringify({ 
+        error: "Le contenu total des messages dépasse la limite autorisée" 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
@@ -111,7 +157,7 @@ Ton objectif : être un outil d'aide à la décision fiable et responsable.`;
   } catch (error) {
     console.error("Medical chat error:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
+      JSON.stringify({ error: "Une erreur s'est produite" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
