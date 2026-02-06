@@ -27,7 +27,7 @@ const RoadmapSection = () => {
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
       quarters: [
-        { q: "Q1", label: "Étude clinique CHU Lyon", active: true },
+        { q: "Étude clinique CHU pilote", label: "Étude clinique CHU Lyon", active: true },
         { q: "Q2", label: "Dossier Marquage CE", active: true },
         { q: "Q3", label: "Validation HAS", active: true },
         { q: "Q4", label: "Certification ISO 27001", active: true }
