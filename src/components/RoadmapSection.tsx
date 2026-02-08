@@ -242,12 +242,12 @@ const RoadmapSection = () => {
                       {phase.quarters.map((quarter, qIdx) => (
                         <div key={qIdx} className="flex items-center justify-between px-2 border-r border-border/30 last:border-r-0">
                           <div className="flex-1 flex items-center justify-center gap-1">
-                            <CheckCircle2 className={`w-3.5 h-3.5 ${quarter.active ? 'text-primary' : 'text-muted-foreground/30'}`} />
-                            <span className="text-[10px] font-medium text-foreground/80 hidden lg:inline text-center">
+                            <CheckCircle2 className={`w-4 h-4 ${quarter.active ? 'text-primary' : 'text-muted-foreground/30'}`} />
+                            <span className="text-xs font-medium text-foreground/90 hidden lg:inline text-center">
                               {quarter.label}
                             </span>
                           </div>
-                          <span className="text-[10px] font-bold text-foreground/60 ml-1">
+                          <span className="text-xs font-bold text-foreground/70 ml-1">
                             {quarter.q}
                           </span>
                         </div>
