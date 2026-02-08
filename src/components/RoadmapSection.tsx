@@ -222,15 +222,11 @@ const RoadmapSection = () => {
                   {/* Gantt Bars */}
                   <div className="col-span-9 grid grid-cols-4 relative">
                     {/* Background quarters */}
-                    {phase.quarters.map((quarter, qIdx) => (
+                    {phase.quarters.map((_, qIdx) => (
                       <div
                         key={qIdx}
-                        className="p-3 border-r border-border last:border-r-0 flex items-center justify-center"
-                      >
-                        <div className="text-[10px] text-muted-foreground/60 text-center hidden md:block">
-                          {quarter.label}
-                        </div>
-                      </div>
+                        className="p-3 border-r border-border last:border-r-0"
+                      />
                     ))}
 
                     {/* Gantt Bar Overlay */}
