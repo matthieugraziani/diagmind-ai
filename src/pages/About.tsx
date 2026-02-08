@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Users, Target, Lightbulb, CheckCircle2, Clock, Rocket, ArrowRight } from "lucide-react";
-import matthieuPhoto from "@/assets/team-matthieu-graziani.jpg";
+import matthieuPhoto from "@/assets/founder-matthieu-graziani.jpg";
 
 
 
