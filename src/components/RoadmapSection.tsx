@@ -27,7 +27,7 @@ const RoadmapSection = () => {
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
       quarters: [
-        { q: "Étude clinique CHU pilote", label: "Étude clinique CHU Lyon", active: true },
+        { q: "Q1", label: "Étude clinique CHU pilote", active: true },
         { q: "Q2", label: "Dossier Marquage CE", active: true },
         { q: "Q3", label: "Validation HAS", active: true },
         { q: "Q4", label: "Certification ISO 27001", active: true }
@@ -237,18 +237,21 @@ const RoadmapSection = () => {
                     <motion.div
                       custom={index}
                       variants={barVariants}
-                      className={`absolute inset-y-3 left-2 right-2 rounded-lg ${phase.bgColor} ${phase.borderColor} border origin-left flex items-center`}
+                      className={`absolute inset-y-3 left-2 right-2 rounded-lg ${phase.bgColor} ${phase.borderColor} border origin-left grid grid-cols-4`}
                     >
-                      <div className="flex items-center justify-between w-full px-3">
-                        {phase.quarters.map((quarter, qIdx) => (
-                          <div key={qIdx} className="flex items-center gap-1">
+                      {phase.quarters.map((quarter, qIdx) => (
+                        <div key={qIdx} className="flex items-center justify-between px-2 border-r border-border/30 last:border-r-0">
+                          <div className="flex-1 flex items-center justify-center gap-1">
                             <CheckCircle2 className={`w-3.5 h-3.5 ${quarter.active ? 'text-primary' : 'text-muted-foreground/30'}`} />
-                            <span className="text-[10px] font-medium text-foreground/80 hidden lg:inline">
-                              {quarter.q}
+                            <span className="text-[10px] font-medium text-foreground/80 hidden lg:inline text-center">
+                              {quarter.label}
                             </span>
                           </div>
-                        ))}
-                      </div>
+                          <span className="text-[10px] font-bold text-foreground/60 ml-1">
+                            {quarter.q}
+                          </span>
+                        </div>
+                      ))}
                     </motion.div>
                   </div>
                 </motion.div>
