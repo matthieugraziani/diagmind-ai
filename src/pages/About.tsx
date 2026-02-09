@@ -256,14 +256,14 @@ const About = () => {
                   <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 hover:shadow-medical transition-all duration-300">
                     <CardHeader className="text-center pb-2">
                       <motion.div 
-                        className="w-32 h-32 rounded-full mx-auto mb-4 overflow-hidden border-4 border-primary/20 shadow-medical"
+                        className="w-40 h-40 rounded-full mx-auto mb-4 overflow-hidden border-4 border-primary/20 shadow-medical"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                       >
                         <img 
                           src={matthieuPhoto} 
                           alt="Matthieu Graziani - Fondateur de DiagMind.AI" 
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-top scale-110"
                         />
                       </motion.div>
                       <Badge variant="default" className="mx-auto mb-2">Fondateur</Badge>
