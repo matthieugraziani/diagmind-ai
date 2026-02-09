@@ -13,7 +13,7 @@ export const useAuth = () => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.id);
+        // Auth state change handled - logging removed for security
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);

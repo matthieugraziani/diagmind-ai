@@ -52,7 +52,8 @@ const ContactSection = () => {
     
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    console.log("Validated and sanitized form data:", sanitizedData);
+    // Form data is sanitized and ready for submission
+    // In production, this would be sent to a backend API
     
     toast({
       title: "Demande envoyée !",
