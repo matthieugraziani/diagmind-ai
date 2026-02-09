@@ -65,58 +65,55 @@ const About = () => {
     { role: "Responsable Médical", description: "Médecin spécialisé en imagerie médicale" }
   ];
 
-  const milestones = [
+  const recruitmentPlan = [
     { 
       year: "2026", 
-      title: "Phase Pilote & Certifications",
-      event: "CHU pilote, Marquage CE et Validation HAS",
-      details: [
-        "Lancement de l'étude pilote au CHU de Toulon avec 500 patients",
-        "Obtention du marquage CE classe IIa (dispositif médical)",
-        "Validation par la Haute Autorité de Santé (HAS)",
-        "Certification ISO 27001 et conformité RGPD complète",
-        "Publication des résultats cliniques dans des revues à comité de lecture"
-      ],
-      status: "upcoming"
+      title: "Équipe Fondatrice",
+      target: "10 collaborateurs",
+      roles: [
+        { title: "CTO", count: 1, description: "Expert deep learning & vision par ordinateur" },
+        { title: "Ingénieurs IA", count: 3, description: "Développement des algorithmes de détection" },
+        { title: "Directeur Scientifique", count: 1, description: "Validation clinique & publications" },
+        { title: "Responsable Médical", count: 1, description: "Relations CHU & protocoles" },
+        { title: "DevOps / Sécurité", count: 2, description: "Infrastructure cloud & conformité" },
+        { title: "Product Manager", count: 1, description: "Développement produit healthtech" },
+        { title: "Affaires Réglementaires", count: 1, description: "Marquage CE & certifications" }
+      ]
     },
     { 
       year: "2027", 
-      title: "Déploiement National",
-      event: "Déploiement national et remboursement Sécurité Sociale",
-      details: [
-        "Extension à l'ensemble des 32 CHU français",
-        "Inscription sur la Liste des Produits et Prestations Remboursables (LPPR)",
-        "Remboursement par l'Assurance Maladie",
-        "Formation de 2 000+ radiologues et neurologues",
-        "Intégration aux systèmes d'information hospitaliers (SIH)"
-      ],
-      status: "upcoming"
+      title: "Croissance Nationale",
+      target: "25 collaborateurs",
+      roles: [
+        { title: "Ingénieurs IA", count: 5, description: "Scaling des modèles" },
+        { title: "Customer Success", count: 3, description: "Accompagnement des CHU" },
+        { title: "Formateurs Médicaux", count: 2, description: "Formation des radiologues" },
+        { title: "Développeurs Full-Stack", count: 3, description: "Interface utilisateur & intégrations" },
+        { title: "Commercial Santé", count: 2, description: "Développement commercial France" }
+      ]
     },
     { 
       year: "2028", 
-      title: "Expansion Thérapeutique",
-      event: "Extension à d'autres pathologies cérébrales",
-      details: [
-        "Détection de la maladie de Parkinson",
-        "Analyse des AVC et lésions vasculaires cérébrales",
-        "Détection précoce de la sclérose en plaques",
-        "Algorithmes de suivi longitudinal des patients",
-        "Partenariats avec 50+ centres de recherche européens"
-      ],
-      status: "upcoming"
+      title: "Expansion Produit",
+      target: "50 collaborateurs",
+      roles: [
+        { title: "Équipe R&D", count: 10, description: "Nouvelles pathologies (Parkinson, AVC...)" },
+        { title: "Data Scientists", count: 5, description: "Analyse de données cliniques" },
+        { title: "Équipe Qualité", count: 3, description: "Assurance qualité & audits" },
+        { title: "Support Technique", count: 4, description: "Support 24/7" },
+        { title: "Marketing & Communication", count: 3, description: "Rayonnement européen" }
+      ]
     },
     { 
       year: "2030", 
-      title: "Leader Mondial",
-      event: "Expansion internationale",
-      details: [
-        "Déploiement dans 15+ pays européens",
-        "Homologation FDA aux États-Unis",
-        "Expansion au Canada, Japon et Australie",
-        "1 million+ d'examens analysés par an",
-        "Centre de R&D international à Singapour"
-      ],
-      status: "upcoming"
+      title: "Leadership Mondial",
+      target: "100+ collaborateurs",
+      roles: [
+        { title: "Équipes Internationales", count: 30, description: "Bureaux EU, US, Asie" },
+        { title: "Équipe Réglementaire", count: 10, description: "FDA, EMA, certifications mondiales" },
+        { title: "R&D Avancée", count: 15, description: "Centre de recherche Singapour" },
+        { title: "Partenariats Stratégiques", count: 5, description: "Alliances industrielles" }
+      ]
     }
   ];
 
@@ -325,17 +322,20 @@ const About = () => {
             </div>
           </AnimatedSectionWrapper>
 
-          {/* Vision 2026-2030 */}
+          {/* Plan de Recrutement */}
           <AnimatedSectionWrapper className="py-16">
             <div className="container mx-auto px-6">
               <motion.div className="text-center mb-12" variants={headerVariants}>
                 <Badge variant="secondary" className="px-4 py-2 text-sm font-medium mb-4">
-                  <Rocket className="w-4 h-4 inline mr-2" />
+                  <Users className="w-4 h-4 inline mr-2" />
                   Notre Vision 2026-2030
                 </Badge>
                 <h2 className="text-3xl font-bold text-foreground mb-4">
-                  Feuille de Route Stratégique
+                  Plan de Recrutement Stratégique
                 </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Une croissance maîtrisée pour accompagner notre développement et notre expansion internationale.
+                </p>
               </motion.div>
 
               <div className="max-w-4xl mx-auto">
@@ -350,7 +350,7 @@ const About = () => {
                     style={{ originY: 0 }}
                   />
                   
-                  {milestones.map((milestone, index) => (
+                  {recruitmentPlan.map((phase, index) => (
                     <motion.div 
                       key={index}
                       custom={index}
@@ -361,31 +361,34 @@ const About = () => {
                         <Card className="bg-background border-border hover:shadow-medical transition-all duration-300 overflow-hidden">
                           <div className="bg-gradient-to-r from-primary/10 to-accent/10 px-4 py-2 border-b border-border">
                             <div className="flex items-center justify-between">
-                              <span className="text-2xl font-bold text-primary">{milestone.year}</span>
-                              <Badge variant="outline" className="text-xs text-amber-600 border-amber-400 bg-amber-50 flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                À venir
+                              <span className="text-2xl font-bold text-primary">{phase.year}</span>
+                              <Badge variant="default" className="text-xs">
+                                {phase.target}
                               </Badge>
                             </div>
                           </div>
                           <CardContent className="p-4">
-                            <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
+                            <h4 className="font-semibold text-foreground flex items-center gap-2 mb-3">
                               <Rocket className="w-4 h-4 text-primary" />
-                              {milestone.title}
+                              {phase.title}
                             </h4>
-                            <p className="text-sm text-muted-foreground mb-3">{milestone.event}</p>
-                            <ul className="space-y-1.5">
-                              {milestone.details.map((detail, idx) => (
+                            <ul className="space-y-2">
+                              {phase.roles.map((role, idx) => (
                                 <motion.li 
                                   key={idx} 
-                                  className="flex items-start gap-2 text-xs text-muted-foreground"
+                                  className="flex items-start gap-2 text-xs"
                                   initial={{ opacity: 0, x: -10 }}
                                   whileInView={{ opacity: 1, x: 0 }}
                                   viewport={{ once: true }}
                                   transition={{ delay: 0.3 + idx * 0.1 }}
                                 >
-                                  <CheckCircle2 className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
-                                  <span>{detail}</span>
+                                  <Badge variant="outline" className="text-xs shrink-0 min-w-[24px] justify-center">
+                                    {role.count}
+                                  </Badge>
+                                  <div>
+                                    <span className="font-medium text-foreground">{role.title}</span>
+                                    <span className="text-muted-foreground"> - {role.description}</span>
+                                  </div>
                                 </motion.li>
                               ))}
                             </ul>
