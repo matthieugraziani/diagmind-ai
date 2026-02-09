@@ -70,6 +70,7 @@ const About = () => {
       year: "2026", 
       title: "Phase Pilote & Certifications",
       event: "CHU pilote, Marquage CE et Validation HAS",
+      staff: "10 recrutements",
       details: [
         "Lancement de l'étude pilote au CHU de Toulon avec 500 patients",
         "Obtention du marquage CE classe IIa (dispositif médical)",
@@ -83,6 +84,7 @@ const About = () => {
       year: "2027", 
       title: "Déploiement National",
       event: "Déploiement national et remboursement Sécurité Sociale",
+      staff: "25 recrutements",
       details: [
         "Extension à l'ensemble des 32 CHU français",
         "Inscription sur la Liste des Produits et Prestations Remboursables (LPPR)",
@@ -96,6 +98,7 @@ const About = () => {
       year: "2028", 
       title: "Expansion Thérapeutique",
       event: "Extension à d'autres pathologies cérébrales",
+      staff: "50 recrutements",
       details: [
         "Détection de la maladie de Parkinson",
         "Analyse des AVC et lésions vasculaires cérébrales",
@@ -109,6 +112,7 @@ const About = () => {
       year: "2030", 
       title: "Leader Mondial",
       event: "Expansion internationale",
+      staff: "100+ recrutements",
       details: [
         "Déploiement dans 15+ pays européens",
         "Homologation FDA aux États-Unis",
@@ -373,7 +377,11 @@ const About = () => {
                               <Rocket className="w-4 h-4 text-primary" />
                               {milestone.title}
                             </h4>
-                            <p className="text-sm text-muted-foreground mb-3">{milestone.event}</p>
+                            <p className="text-sm text-muted-foreground mb-2">{milestone.event}</p>
+                            <Badge variant="secondary" className="mb-3 text-xs flex items-center gap-1 w-fit">
+                              <Users className="w-3 h-3" />
+                              {milestone.staff}
+                            </Badge>
                             <ul className="space-y-1.5">
                               {milestone.details.map((detail, idx) => (
                                 <motion.li 
